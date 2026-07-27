@@ -1,0 +1,31 @@
+{
+  "name": "apex-leads-extractor",
+  "version": "5.0.0",
+  "private": true,
+  "description": "Chrome MV3 extension that extracts B2B leads from Google Maps across 30 countries, sweeping at least 3 geographic points per city and exporting to CSV.",
+  "keywords": [
+    "google-maps",
+    "lead-generation",
+    "lead-scraper",
+    "b2b",
+    "chrome-extension",
+    "manifest-v3",
+    "prospecting",
+    "csv-export",
+    "sales",
+    "local-business"
+  ],
+  "homepage": "https://github.com/severoads3/apex-gmaps-extractor#readme",
+  "bugs": {
+    "url": "https://github.com/severoads3/apex-gmaps-extractor/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/severoads3/apex-gmaps-extractor.git"
+  },
+  "license": "MIT",
+  "scripts": {
+    "test": "node tests/harness-background.js && node tests/harness-content.js && node tests/harness-paises.js",
+    "build:paises": "node scripts/gerar-paises.js"
+  }
+}

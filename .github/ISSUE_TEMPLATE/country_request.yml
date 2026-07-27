@@ -1,0 +1,77 @@
+name: 🌍 Pedir um país novo
+description: Adicionar um país à cobertura geográfica
+title: "[país]: "
+labels: ["dados", "good first issue"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Adicionar um país é uma das contribuições mais fáceis do projeto: uma linha em
+        `scripts/paises-config.js`, uma bandeira SVG e um comando.
+
+        Se quiser fazer você mesmo, o passo a passo está em
+        [CONTRIBUTING.md → Adicionando um país](https://github.com/severoads3/apex-gmaps-extractor/blob/main/CONTRIBUTING.md#adicionando-um-país).
+        Se preferir só pedir, preencha abaixo.
+
+  - type: input
+    id: pais
+    attributes:
+      label: País
+      placeholder: Suécia
+    validations:
+      required: true
+
+  - type: input
+    id: iso2
+    attributes:
+      label: Código ISO-3166 alpha-2
+      description: Duas letras maiúsculas. Precisa bater com o `country_code` do GeoNames.
+      placeholder: SE
+    validations:
+      required: true
+
+  - type: input
+    id: nome_busca
+    attributes:
+      label: Nome usado na busca do Maps
+      description: O nome no idioma local (ou em inglês) que o Google Maps reconhece melhor no fim da query.
+      placeholder: Sverige
+    validations:
+      required: true
+
+  - type: input
+    id: ddi
+    attributes:
+      label: Código telefônico internacional (sem "+")
+      placeholder: "46"
+    validations:
+      required: true
+
+  - type: input
+    id: tamanhos
+    attributes:
+      label: Comprimentos válidos do número nacional (sem DDI)
+      description: Em dígitos, separados por vírgula. Ex.\ no Brasil são 10 e 11.
+      placeholder: "7, 8, 9"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: tronco
+    attributes:
+      label: Prefixo de tronco nacional
+      description: O dígito removido antes de montar o número E.164. Se não houver, escolha "nenhum".
+      options:
+        - "nenhum"
+        - "0"
+        - "01"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: ajuda
+    attributes:
+      label: Você pode abrir o PR?
+      options:
+        - label: Sim, vou seguir o guia do CONTRIBUTING e abrir o PR
+        - label: Não, é só o pedido

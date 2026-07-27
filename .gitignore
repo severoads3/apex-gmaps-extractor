@@ -1,0 +1,51 @@
+# --------------------------------------------------------------------
+# Dados de terceiros — NUNCA commitar
+# --------------------------------------------------------------------
+# CSVs de coleta contêm nomes, telefones e endereços de empresas reais.
+*.csv
+
+# --------------------------------------------------------------------
+# Segredos
+# --------------------------------------------------------------------
+# A chave da Groq vive em chrome.storage.local, na máquina do usuário.
+# Nada de chave deve chegar ao repositório.
+.env
+.env.*
+*.pem
+*.key
+secrets.json
+
+# --------------------------------------------------------------------
+# Artefatos de empacotamento da extensão
+# --------------------------------------------------------------------
+*.zip
+*.crx
+
+# --------------------------------------------------------------------
+# Dependências e build
+# --------------------------------------------------------------------
+node_modules/
+package-lock.json
+npm-debug.log*
+
+# Dumps do GeoNames baixados só em dev para gerar data/paises/.
+# São centenas de MB e regeneráveis: veja scripts/gerar-paises.js.
+scripts/geonames_tmp/
+
+# --------------------------------------------------------------------
+# Notas internas de planejamento (não fazem parte do produto)
+# --------------------------------------------------------------------
+MELHORIAS*.txt
+UPDATE.md
+EXTENS*.txt
+
+# --------------------------------------------------------------------
+# Sistema operacional e editores
+# --------------------------------------------------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+*.swp
+*~

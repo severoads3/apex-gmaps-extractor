@@ -1,0 +1,101 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Testes (Node ${{ matrix.node }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: ['18', '20', '22']
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configura Node ${{ matrix.node }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Roda a suíte de testes
+        run: npm test
+
+  validate-manifest:
+    name: Valida o manifest MV3
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: manifest.json é JSON válido e MV3
+        run: |
+          node -e "
+            const m = require('./manifest.json');
+            const p = require('./package.json');
+            if (m.manifest_version !== 3) throw new Error('manifest_version deve ser 3');
+            if (!m.name || !m.version || !m.description) throw new Error('name/version/description obrigatorios');
+            if (m.version !== p.version) throw new Error('versao do manifest (' + m.version + ') difere do package.json (' + p.version + ')');
+            console.log('OK:', m.name, m.version);
+          "
+
+      - name: Todo arquivo referenciado pelo manifest existe
+        run: |
+          node -e "
+            const fs = require('fs');
+            const m = require('./manifest.json');
+            const alvos = [
+              m.background.service_worker,
+              m.action.default_popup,
+              m.options_ui.page,
+              ...Object.values(m.icons),
+              ...Object.values(m.action.default_icon)
+            ];
+            const faltando = alvos.filter(f => !fs.existsSync(f));
+            if (faltando.length) throw new Error('arquivos ausentes: ' + faltando.join(', '));
+            console.log('OK:', alvos.length, 'arquivos referenciados existem');
+          "
+
+      - name: Sintaxe dos scripts da extensão
+        run: |
+          for f in background.js content.js popup.js options.js resultados.js; do
+            node --check "$f" && echo "OK: $f"
+          done
+
+  no-secrets:
+    name: Nenhum segredo commitado
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Procura chaves de API e CSVs de leads
+        run: |
+          set +e
+          # chaves reais (Groq, OpenAI, tokens do GitHub). Ignora placeholders "gsk_..."
+          achou=$(grep -rInE '(gsk_[A-Za-z0-9]{20,}|sk-[A-Za-z0-9]{20,}|ghp_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,})' \
+            --exclude-dir=.git --exclude-dir=data . )
+          if [ -n "$achou" ]; then
+            echo "::error::Possivel chave de API commitada:"
+            echo "$achou"
+            exit 1
+          fi
+          csvs=$(find . -name '*.csv' -not -path './.git/*')
+          if [ -n "$csvs" ]; then
+            echo "::error::CSV de leads commitado (dados de terceiros nao entram no repo):"
+            echo "$csvs"
+            exit 1
+          fi
+          echo "OK: nenhum segredo nem CSV de leads no repositorio"

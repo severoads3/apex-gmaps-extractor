@@ -1,0 +1,110 @@
+name: 🐛 Reportar um bug
+description: Algo não funciona como deveria
+title: "[bug]: "
+labels: ["bug", "triagem"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Obrigado por reportar! Quanto mais específico, mais rápido resolvemos.
+
+        ⚠️ **Não é para bug de segurança.** Use o
+        [relato privado de vulnerabilidade](https://github.com/severoads3/apex-gmaps-extractor/security/advisories/new).
+
+  - type: checkboxes
+    id: checagens
+    attributes:
+      label: Antes de abrir
+      options:
+        - label: Procurei nas issues existentes e não achei este problema
+          required: true
+        - label: Li a seção de solução de problemas do [docs/INSTALL.md](https://github.com/severoads3/apex-gmaps-extractor/blob/main/docs/INSTALL.md#solução-de-problemas)
+          required: true
+        - label: Estou na versão mais recente da branch `main`
+          required: false
+
+  - type: textarea
+    id: descricao
+    attributes:
+      label: O que aconteceu
+      description: Descreva o problema de forma objetiva.
+      placeholder: Ao clicar em Iniciar com 3 cidades marcadas, a aba de trabalho abre mas nada é extraído.
+    validations:
+      required: true
+
+  - type: textarea
+    id: esperado
+    attributes:
+      label: O que você esperava que acontecesse
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduzir
+    attributes:
+      label: Como reproduzir
+      description: Passo a passo. Inclua o termo de busca e a região exatos — muitos bugs só aparecem em certas cidades.
+      value: |
+        1. Termo de busca: `...`
+        2. País / estado / cidade: `...`
+        3. Modo de execução: `...`
+        4. Cliquei em `...`
+        5. Aconteceu `...`
+    validations:
+      required: true
+
+  - type: textarea
+    id: console
+    attributes:
+      label: Log do service worker
+      description: |
+        `chrome://extensions` → card da extensão → link azul **Service worker** → aba **Console**.
+        Cole os erros (a saída é formatada como código automaticamente).
+      render: text
+
+  - type: input
+    id: versao
+    attributes:
+      label: Versão da extensão
+      description: Está no `manifest.json` ou no card em `chrome://extensions`.
+      placeholder: "5.0.0"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: navegador
+    attributes:
+      label: Navegador
+      options:
+        - Chrome
+        - Edge
+        - Brave
+        - Opera
+        - Outro (Chromium)
+    validations:
+      required: true
+
+  - type: input
+    id: versao_navegador
+    attributes:
+      label: Versão do navegador
+      placeholder: "131.0.6778.86"
+
+  - type: dropdown
+    id: so
+    attributes:
+      label: Sistema operacional
+      options:
+        - Windows
+        - macOS
+        - Linux
+    validations:
+      required: true
+
+  - type: textarea
+    id: extra
+    attributes:
+      label: Contexto adicional
+      description: |
+        Configurações não padrão? Chave da Groq configurada? Perfil com conta Google logada?
+        Prints ajudam — mas **borre nomes e telefones de leads** antes de anexar.

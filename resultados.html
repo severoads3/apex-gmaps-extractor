@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Resultados — Apex Leads Extractor</title>
+<style>
+  :root {
+    --fundo: #f4f4f6; --cartao: #ffffff; --texto: #111114; --texto-suave: #8a8a93;
+    --borda: #e7e7ec; --borda-suave: #ededf1; --campo: #f7f7f9; --acento: #0071e3;
+    --acento-2: #0a84ff; --acento-hover: #0060c8; --acento-soft: rgba(10,132,255,.16);
+    --zebra: #f8f8fa; --hover: #eeeef1;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --fundo: #0b0b0d; --cartao: #161619; --texto: #f5f5f7; --texto-suave: #6d6d77;
+      --borda: #26262b; --borda-suave: #2d2d33; --campo: #1b1b1f; --acento: #0a84ff;
+      --acento-2: #409cff; --acento-hover: #409cff; --acento-soft: rgba(10,132,255,.24);
+      --zebra: #1b1b1f; --hover: #202024;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 28px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, sans-serif;
+    background: var(--fundo); color: var(--texto); font-size: 13px;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1 { font-size: 21px; font-weight: 650; margin: 0; letter-spacing: -0.02em; }
+  .cabecalho { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 10px; }
+  .resumo { color: var(--texto-suave); font-size: 13px; }
+  .barra {
+    display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
+    background: var(--cartao); border: 1px solid var(--borda); border-radius: 14px;
+    padding: 12px 14px; margin-bottom: 14px;
+    box-shadow: 0 1px 2px rgba(17,17,20,0.05);
+  }
+  input[type="text"], select {
+    padding: 8px 11px; border-radius: 10px; border: 1px solid var(--borda);
+    background: var(--campo); color: var(--texto); font-size: 13px; font-family: inherit; outline: none;
+    transition: border-color .15s, box-shadow .15s;
+  }
+  input[type="text"] { min-width: 220px; }
+  input:focus, select:focus { border-color: var(--acento); box-shadow: 0 0 0 3px var(--acento-soft); }
+  label.chk { display: flex; align-items: center; gap: 6px; cursor: pointer; }
+  input[type="checkbox"] { accent-color: var(--acento); width: 15px; height: 15px; }
+  button {
+    padding: 8px 15px; border-radius: 10px; border: none; font-size: 13px; font-weight: 600;
+    cursor: pointer; font-family: inherit; letter-spacing: -0.01em;
+    background: linear-gradient(180deg, var(--acento-2), var(--acento)); color: #fff;
+    box-shadow: 0 1px 2px rgba(0,113,227,.3), 0 4px 12px rgba(0,113,227,.22);
+    transition: filter .15s, transform .1s;
+  }
+  button:hover { filter: brightness(1.06); }
+  button:active { transform: translateY(1px); }
+  button.suave {
+    background: transparent; color: var(--acento); box-shadow: none;
+    border: 1px solid var(--borda);
+  }
+  button.suave:hover { background: var(--acento-soft); filter: none; }
+  .tabela-envolucro {
+    background: var(--cartao); border: 1px solid var(--borda); border-radius: 14px; overflow: auto;
+    box-shadow: 0 1px 2px rgba(17,17,20,0.05), 0 8px 20px rgba(17,17,20,0.05); max-height: calc(100vh - 220px);
+  }
+  table { border-collapse: collapse; width: 100%; min-width: 1100px; }
+  th, td { padding: 8px 10px; text-align: left; border-bottom: 1px solid var(--borda-suave); white-space: nowrap; }
+  td.quebra { white-space: normal; min-width: 160px; }
+  th {
+    position: sticky; top: 0; background: var(--cartao); font-weight: 600; cursor: pointer;
+    user-select: none; z-index: 1; font-size: 11px; text-transform: uppercase;
+    letter-spacing: 0.03em; color: var(--texto-suave); border-bottom: 1px solid var(--borda);
+  }
+  th .seta { color: var(--acento); font-size: 11px; }
+  tbody tr:nth-child(even) { background: var(--zebra); }
+  tbody tr:hover { background: var(--hover); }
+  a { color: var(--acento); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .vazio { padding: 40px; text-align: center; color: var(--texto-suave); }
+</style>
+</head>
+<body>
+  <div class="cabecalho">
+    <h1>Resultados da prospecção</h1>
+    <div class="resumo" id="resumo">Carregando...</div>
+  </div>
+
+  <div class="barra">
+    <input type="text" id="filtroTexto" placeholder="Buscar por nome, categoria, endereço...">
+    <select id="filtroCidade">
+      <option value="">Todas as cidades</option>
+    </select>
+    <select id="filtroTermo">
+      <option value="">Todos os termos</option>
+    </select>
+    <label class="chk"><input type="checkbox" id="soComTelefone"> Só com telefone</label>
+    <button type="button" id="btnCopiarTsv">Copiar TSV</button>
+    <button type="button" id="btnExportarCsv">Exportar CSV</button>
+    <button type="button" class="suave" id="btnAtualizar">Atualizar</button>
+  </div>
+
+  <div class="tabela-envolucro">
+    <table>
+      <thead>
+        <tr id="linhaCabecalho"></tr>
+      </thead>
+      <tbody id="corpoTabela"></tbody>
+    </table>
+    <div class="vazio" id="mensagemVazio" hidden>Nenhum lead coletado ainda.</div>
+  </div>
+
+  <footer style="margin-top:24px;padding:12px 4px;font-size:11px;color:#8a8a8f;text-align:center;">
+    Dados geográficos: <a href="https://www.geonames.org" target="_blank" rel="noopener" style="color:inherit;">GeoNames.org</a> (CC BY 4.0) e IBGE.
+  </footer>
+
+  <script src="resultados.js"></script>
+</body>
+</html>

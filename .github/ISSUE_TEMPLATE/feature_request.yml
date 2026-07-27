@@ -1,0 +1,66 @@
+name: 💡 Sugerir um recurso
+description: Uma ideia para melhorar a extensão
+title: "[feat]: "
+labels: ["enhancement", "triagem"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Boas ideias são bem-vindas. Antes de escrever, dê uma olhada em
+        ["O que não entra no projeto"](https://github.com/severoads3/apex-gmaps-extractor/blob/main/CONTRIBUTING.md#o-que-não-entra-no-projeto)
+        — algumas coisas estão fora de escopo por decisão de projeto, não por falta de tempo.
+
+  - type: checkboxes
+    id: checagens
+    attributes:
+      label: Antes de abrir
+      options:
+        - label: Procurei nas issues existentes e não achei esta ideia
+          required: true
+        - label: Li a seção "O que não entra no projeto" do CONTRIBUTING
+          required: true
+
+  - type: textarea
+    id: problema
+    attributes:
+      label: Que problema isso resolve?
+      description: Descreva a dor, não a solução. Ideias avaliadas pelo problema real costumam virar recursos melhores.
+      placeholder: Quando varro 200 cidades, não consigo saber quais já terminaram sem contar no log.
+    validations:
+      required: true
+
+  - type: textarea
+    id: solucao
+    attributes:
+      label: Solução que você imagina
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternativas
+    attributes:
+      label: Alternativas que você considerou
+      description: Existe uma forma de resolver com o que a extensão já faz hoje?
+
+  - type: dropdown
+    id: escopo
+    attributes:
+      label: Isso exigiria...
+      multiple: true
+      options:
+        - Nenhuma dependência nova
+        - Uma dependência externa
+        - Uma permissão nova no manifest.json
+        - Uma API paga
+        - Não sei
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: ajuda
+    attributes:
+      label: Você gostaria de implementar?
+      options:
+        - label: Sim, posso abrir um PR
+        - label: Talvez, com orientação
+        - label: Não, só a sugestão mesmo

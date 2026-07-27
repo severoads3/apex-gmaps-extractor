@@ -1,0 +1,30 @@
+{
+  "manifest_version": 3,
+  "name": "Apex Leads Extractor",
+  "version": "5.0.0",
+  "description": "Extraia leads B2B do Google Maps em 30 países: escolha país, estado e cidades, varra no mínimo 3 pontos por cidade e exporte para CSV.",
+  "permissions": ["tabs", "scripting", "storage", "downloads", "alarms", "notifications", "unlimitedStorage"],
+  "host_permissions": ["*://*.google.com/*", "*://*.google.com.br/*", "https://api.groq.com/*"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  }
+}
