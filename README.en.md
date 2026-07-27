@@ -1,13 +1,18 @@
-# Apex Leads Extractor — B2B lead extractor for Google Maps
+# Apex Leads Extractor — free Google Maps lead extractor & scraper
 
-**A Chrome (Manifest V3) extension that extracts B2B leads from Google Maps across 30 countries and exports them to CSV.**
-Pick a country → state → cities, and the extension sweeps **at least 3 geographic points per city** (up to 9 in large metros), deduplicates results, discards businesses that aren't actually in the city, and — optionally — uses AI to filter and enrich every lead.
+**A free, open-source Chrome extension (Manifest V3) that extracts B2B leads from Google Maps across
+30 countries and exports them to CSV.**
+Pick a country → state → cities and the extension sweeps every city from **at least 3 geographic
+points** (up to 9 in large metros), deduplicates results, discards businesses that aren't actually in
+the city, and returns name, phone, WhatsApp link, website, address and ratings in a ready-to-use
+spreadsheet. No paid API, no server, no signup — it all runs in your browser.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Manifest V3](https://img.shields.io/badge/Chrome-Manifest%20V3-4285F4?logo=googlechrome&logoColor=white)](manifest.json)
+[![Chrome Manifest V3](https://img.shields.io/badge/Chrome-Manifest%20V3-4285F4?logo=googlechrome&logoColor=white)](manifest.json)
 [![Zero dependencies](https://img.shields.io/badge/dependencies-0-brightgreen)](package.json)
-[![Tests](https://github.com/severoads3/apex-gmaps-extractor/actions/workflows/ci.yml/badge.svg)](https://github.com/severoads3/apex-gmaps-extractor/actions/workflows/ci.yml)
+[![Test status](https://github.com/severoads3/apex-gmaps-extractor/actions/workflows/ci.yml/badge.svg)](https://github.com/severoads3/apex-gmaps-extractor/actions/workflows/ci.yml)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-blue.svg)](CONTRIBUTING.md)
+[![Built for B2B prospecting](https://img.shields.io/badge/use%20case-B2B%20prospecting-8A2BE2)](#use-cases)
 
 > 🇧🇷 A interface e a documentação principal estão em português: [README.md](README.md).
 
@@ -29,6 +34,24 @@ Apex Leads Extractor fixes both:
 
 Everything runs **entirely in your browser**. No server, no paid API, no account, no data leaving your
 machine (except, if you opt in, the AI validation call).
+
+## Use cases
+
+| Who | Typical use |
+|---|---|
+| **B2B sales teams** | Build a prospecting list by city and segment — every dental clinic in a region, with phone and WhatsApp |
+| **Marketing agencies** | Find local businesses with an empty `Site` column and pitch them a web presence |
+| **Field sales reps** | Map the territory before driving it: how many resellers exist per city |
+| **Franchise / expansion** | Study competitor density per city before choosing where to open |
+| **Market research** | Compare count, average rating and review volume of a segment across cities |
+| **Cold outreach** | Export a base already sorted by priority, with a suggested opening message per lead |
+
+Questions this tool answers in practice: *how to extract contacts from Google Maps*, *how to build a
+list of businesses by city*, *how to export Google Maps results to Excel*, *how to find local
+businesses without a website*.
+
+Before using it for commercial outreach, read
+[Responsible use and disclaimer](#responsible-use-and-disclaimer) — GDPR and LGPD apply.
 
 ## Features
 
@@ -159,6 +182,23 @@ content.js        runs on the Maps page: infinite scroll with incremental harves
 
 The codebase and its comments are in Portuguese. `docs/ARCHITECTURE.md` explains the data formats and
 extension points.
+
+## What this tool does not do
+
+Stated plainly, so you don't install something that won't solve your problem:
+
+- **It does not extract e-mail addresses.** Google Maps doesn't expose them. You get the `Site`
+  column; finding an e-mail from there is a separate job.
+- **It does not extract individual reviews or review text.** Only the average rating and review count.
+- **It does not extract social media profiles.**
+- **It does not use the Google Places API.** It automates Maps in your own browser — that's why it's
+  free, and why it's subject to Google's pacing and verification challenges.
+- **It is not a cloud service.** It doesn't run without your browser open, and there's no web dashboard.
+- **It does not send e-mails or messages.** It produces the list; the outreach — and the GDPR/LGPD
+  obligations attached to it — are yours.
+- **It does not run on Firefox or Safari.** Chromium only (Chrome, Edge, Brave, Opera).
+- **It does not guarantee every business in a city.** No tool does: you get what Maps shows.
+  Multi-point coverage widens the net substantially, but it is not a census.
 
 ## Development
 

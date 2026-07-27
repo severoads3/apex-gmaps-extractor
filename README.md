@@ -1,21 +1,27 @@
-# Apex Leads Extractor — extrator de leads B2B do Google Maps
+# Apex Leads Extractor — extrator de leads do Google Maps (grátis e open source)
 
-**Extensão para Chrome (Manifest V3) que extrai leads B2B do Google Maps em 30 países e exporta tudo para CSV.**
-Escolha país → estado → cidades, e a extensão varre **no mínimo 3 pontos geográficos por cidade** (até 9 em metrópoles), remove duplicados, descarta resultados de fora da cidade e — opcionalmente — usa IA para filtrar e enriquecer cada lead.
+**Extensão gratuita para Chrome que extrai leads B2B do Google Maps em 30 países e exporta para CSV.**
+Escolha país → estado → cidades e a extensão varre cada cidade em **no mínimo 3 pontos geográficos**
+(até 9 em metrópoles), remove duplicados, descarta negócios de fora da cidade e entrega nome,
+telefone, WhatsApp, site, endereço e avaliações em uma planilha pronta. Sem API paga, sem servidor,
+sem cadastro — roda inteiro no seu navegador.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Manifest V3](https://img.shields.io/badge/Chrome-Manifest%20V3-4285F4?logo=googlechrome&logoColor=white)](manifest.json)
+*Free, open-source Google Maps scraper / lead extractor — a Chrome Manifest V3 extension that
+exports local business leads to CSV across 30 countries. [English documentation →](README.en.md)*
+
+[![Licença MIT](https://img.shields.io/badge/Licen%C3%A7a-MIT-yellow.svg)](LICENSE)
+[![Chrome Manifest V3](https://img.shields.io/badge/Chrome-Manifest%20V3-4285F4?logo=googlechrome&logoColor=white)](manifest.json)
 [![Zero dependências](https://img.shields.io/badge/depend%C3%AAncias-0-brightgreen)](package.json)
-[![Testes](https://github.com/severoads3/apex-gmaps-extractor/actions/workflows/ci.yml/badge.svg)](https://github.com/severoads3/apex-gmaps-extractor/actions/workflows/ci.yml)
+[![Status dos testes](https://github.com/severoads3/apex-gmaps-extractor/actions/workflows/ci.yml/badge.svg)](https://github.com/severoads3/apex-gmaps-extractor/actions/workflows/ci.yml)
 [![PRs bem-vindos](https://img.shields.io/badge/PRs-bem--vindos-blue.svg)](CONTRIBUTING.md)
-
-> 🇬🇧 **English speaker?** Read the [English README](README.en.md).
+[![Feito para prospecção B2B](https://img.shields.io/badge/uso-prospec%C3%A7%C3%A3o%20B2B-8A2BE2)](#casos-de-uso)
 
 ---
 
 ## Índice
 
 - [Por que existe](#por-que-existe)
+- [Casos de uso](#casos-de-uso)
 - [Recursos](#recursos)
 - [Cobertura geográfica](#cobertura-geográfica)
 - [Instalação](#instalação)
@@ -24,6 +30,7 @@ Escolha país → estado → cidades, e a extensão varre **no mínimo 3 pontos 
 - [Configuração](#configuração)
 - [Validação e enriquecimento por IA (opcional)](#validação-e-enriquecimento-por-ia-opcional)
 - [Como funciona por dentro](#como-funciona-por-dentro)
+- [O que esta ferramenta não faz](#o-que-esta-ferramenta-não-faz)
 - [Desenvolvimento](#desenvolvimento)
 - [Contribuindo](#contribuindo)
 - [Perguntas frequentes](#perguntas-frequentes)
@@ -48,6 +55,26 @@ O Apex Leads Extractor resolve os dois problemas:
 
 Tudo roda **100% no seu navegador**. Sem servidor, sem API paga, sem conta, sem dado saindo da sua máquina
 (exceto, se você quiser, a validação opcional por IA).
+
+## Casos de uso
+
+Para quem esta ferramenta foi feita, e o que cada perfil costuma fazer com ela:
+
+| Perfil | Uso típico |
+|---|---|
+| **Time comercial B2B** | Montar uma lista de prospecção por cidade e segmento — ex.: todas as clínicas odontológicas do interior de SP, com telefone e WhatsApp |
+| **Agência de marketing** | Levantar negócios locais sem site na coluna `Site`, para oferecer criação de presença digital |
+| **Representante comercial** | Mapear o território antes de rodar: quantos revendedores existem em cada cidade da região |
+| **Franquia / expansão** | Estudar densidade de concorrentes por cidade antes de escolher onde abrir |
+| **Pesquisa de mercado** | Contar e comparar quantidade, nota média e volume de avaliações de um segmento entre cidades |
+| **Cold call / cold e-mail** | Exportar a base já ordenada por prioridade, com uma mensagem de abordagem sugerida por lead |
+
+Perguntas que esta ferramenta responde na prática: *como extrair contatos do Google Maps*,
+*como gerar uma lista de empresas por cidade*, *como exportar resultados do Google Maps para Excel*,
+*como encontrar empresas sem site em uma região*.
+
+Antes de usar para comunicação comercial, leia
+[Uso responsável e aviso legal](#uso-responsável-e-aviso-legal) — LGPD e GDPR se aplicam.
 
 ## Recursos
 
@@ -221,6 +248,24 @@ content.js        roda na página do Maps: scroll infinito com colheita incremen
 - **Nenhuma requisição de rede em runtime** além do próprio Google Maps (e da Groq, se você ligar a IA).
 
 > 📖 Arquitetura detalhada, formato dos dados e como estender: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
+
+## O que esta ferramenta não faz
+
+Dito com franqueza, para você não perder tempo instalando algo que não resolve o seu problema:
+
+- **Não extrai e-mails.** O Google Maps não expõe e-mail. A extensão traz o `Site`; encontrar o
+  e-mail a partir dele é outro trabalho.
+- **Não extrai avaliações individuais nem o texto dos comentários.** Só a nota média e a
+  quantidade de avaliações.
+- **Não extrai perfis de redes sociais.**
+- **Não usa a Google Places API.** É automação do Maps no seu navegador — por isso é gratuita, e
+  por isso está sujeita ao ritmo e às verificações do Google.
+- **Não é um serviço em nuvem.** Não roda sem o seu navegador aberto, e não existe painel web.
+- **Não envia e-mail nem mensagem.** Ela produz a lista; a comunicação é com você — e com as regras
+  de LGPD/GDPR que se aplicam a ela.
+- **Não roda no Firefox nem no Safari.** Só Chromium (Chrome, Edge, Brave, Opera).
+- **Não garante 100% dos negócios de uma cidade.** Nenhuma ferramenta garante: o que existe é o que
+  o Maps mostra. A cobertura em múltiplos pontos aumenta muito o alcance, mas não é um censo.
 
 ## Desenvolvimento
 
